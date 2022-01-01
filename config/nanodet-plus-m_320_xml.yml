@@ -79,8 +79,8 @@ data:
   train:
     name: XMLDataset
     class_names: *class_names
-    img_path: coco/train2017
-    ann_path: coco/annotations
+    img_path: coco/train2017/images
+    ann_path: coco/train2017/annotations
     input_size: [320,320] #[w,h]
     keep_ratio: False
     pipeline:
@@ -98,8 +98,8 @@ data:
   val:
     name: XMLDataset
     class_names: *class_names
-    img_path: coco/val2017
-    ann_path: coco/annotations
+    img_path: coco/val2017/images
+    ann_path: coco/val2017/annotations
     input_size: [320,320] #[w,h]
     keep_ratio: False
     pipeline:

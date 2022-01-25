@@ -2,3 +2,16 @@
 conda create -n nanodet python=3.7 -y
 conda activate nanodet
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+python setup.py develop
+
+#train
+python tools/train.py config/nanodet-plus-m-1.5x_416_xml_hand26_20220115.yml
+
+#export
+export CONFIG_PATH=./config/nanodet-plus-m-1.5x_416_xml_hand26_20220115.yml
+export PYTORCH_MODEL_PATH=workspace/nanodet-plus-m-1.5x_416/model_best/nanodet_model_best.pth
+python tools/export_onnx.py --cfg_path ${CONFIG_PATH} --model_path ${PYTORCH_MODEL_PATH}
+
+export CONFIG_PATH=./config/nanodet-plus-m_416_xml_head_20220115.yml
+export PYTORCH_MODEL_PATH=workspace/nanodet-plus-m_416/model_best/nanodet_model_best.pth
+python tools/export_onnx.py --cfg_path ${CONFIG_PATH} --model_path ${PYTORCH_MODEL_PATH}

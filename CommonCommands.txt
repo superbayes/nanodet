@@ -15,3 +15,6 @@ python tools/export_onnx.py --cfg_path ${CONFIG_PATH} --model_path ${PYTORCH_MOD
 export CONFIG_PATH=./config/nanodet-plus-m_416_xml_head_20220115.yml
 export PYTORCH_MODEL_PATH=workspace/nanodet-plus-m_416/model_best/nanodet_model_best.pth
 python tools/export_onnx.py --cfg_path ${CONFIG_PATH} --model_path ${PYTORCH_MODEL_PATH}
+
+
+pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html    //torchaudio==0.10.2+cu113 

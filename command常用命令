@@ -5,7 +5,7 @@ conda activate nanodet
 conda install pytorch torchvision cudatoolkit=11.1 -c pytorch -c conda-forge
 pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html 
 pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu116
-pip install Cython termcolor numpy tensorboard pycocotools matplotlib pyaml opencv-python tqdm pytorch-lightning torchmetrics tabulate
+pip install Cython termcolor numpy tensorboard pycocotools matplotlib pyaml opencv-python tqdm pytorch-lightning torchmetrics tabulate onnxsim
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 

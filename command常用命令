@@ -17,7 +17,13 @@ python setup.py develop
 #训练模型
 python tools/train.py CONFIG_FILE_PATH
 #导出onnx
+CONFIG_PATH=./config/nanodet-plus-m-1.5x_416_bccd_voc.yml
+PYTORCH_MODEL_PATH=./workspace/nanodet-plus-m-1.5x_416/model_best/nanodet_model_best.pth
 python tools/export_onnx.py --cfg_path ${CONFIG_PATH} --model_path ${PYTORCH_MODEL_PATH}
+
+#模型预测
+python demo/demo.py image --config config/nanodet-plus-m-1.5x_416.yml --model config/nanodet-plus-m-1.5x_416.pth --path images/
+
 
 #压缩与解压
 unzip ./datasets/xx.zip -d ./

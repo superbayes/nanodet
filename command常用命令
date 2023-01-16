@@ -1,0 +1,29 @@
+conda create -n nanodet python=3.8 -y
+conda activate nanodet
+
+#安装环境
+conda install pytorch torchvision cudatoolkit=11.1 -c pytorch -c conda-forge
+pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html 
+pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu116
+pip install Cython termcolor numpy tensorboard pycocotools matplotlib pyaml opencv-python tqdm pytorch-lightning torchmetrics tabulate
+
+
+#恒源云clone项目
+git clone https://ghproxy.com/https://github.com/RangiLyu/nanodet.git
+cd nanodet
+python setup.py develop
+
+#训练模型
+python tools/train.py CONFIG_FILE_PATH
+#导出onnx
+python tools/export_onnx.py --cfg_path ${CONFIG_PATH} --model_path ${PYTORCH_MODEL_PATH}
+
+#压缩与解压
+unzip ./datasets/xx.zip -d ./
+zip -q -r runs_nanodet.zip workspace/*
+
+#查看gpu
+nvidia-smi
+#查看训练指标
+cd <YOUR_SAVE_DIR>
+tensorboard --logdir ./

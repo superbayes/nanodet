@@ -44,6 +44,7 @@ class CocoDataset(BaseDataset):
         self.cat_ids = sorted(self.coco_api.getCatIds())
         self.cat2label = {cat_id: i for i, cat_id in enumerate(self.cat_ids)}
         self.cats = self.coco_api.loadCats(self.cat_ids)
+        self.class_names = [cat["name"] for cat in self.cats]
         self.img_ids = sorted(self.coco_api.imgs.keys())
         img_info = self.coco_api.loadImgs(self.img_ids)
         return img_info
@@ -76,15 +77,13 @@ class CocoDataset(BaseDataset):
         if self.use_keypoint:
             gt_keypoints = []
         for ann in anns:
-            if ann.get("ignore", False):
-                continue
             x1, y1, w, h = ann["bbox"]
             if ann["area"] <= 0 or w < 1 or h < 1:
                 continue
             if ann["category_id"] not in self.cat_ids:
                 continue
             bbox = [x1, y1, x1 + w, y1 + h]
-            if ann.get("iscrowd", False):
+            if ann.get("iscrowd", False) or ann.get("ignore", False):
                 gt_bboxes_ignore.append(bbox)
             else:
                 gt_bboxes.append(bbox)
@@ -130,7 +129,11 @@ class CocoDataset(BaseDataset):
             raise FileNotFoundError("Cant load image! Please check image path!")
         ann = self.get_img_annotation(idx)
         meta = dict(
-            img=img, img_info=img_info, gt_bboxes=ann["bboxes"], gt_labels=ann["labels"]
+            img=img,
+            img_info=img_info,
+            gt_bboxes=ann["bboxes"],
+            gt_labels=ann["labels"],
+            gt_bboxes_ignore=ann["bboxes_ignore"],
         )
         if self.use_instance_mask:
             meta["gt_masks"] = ann["masks"]

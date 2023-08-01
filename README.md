@@ -73,6 +73,10 @@ MobileDet      | 320*320 |   25.6   | -                    | -                  
 
 ## NEWS!!!
 
+* [2023.01.20] Upgrade to [pytorch-lightning-1.9](https://github.com/Lightning-AI/lightning/releases/tag/1.9.0). The minimum PyTorch version is upgraded to 1.10. Support FP16 training(Thanks @crisp-snakey). Support ignore label(Thanks @zero0kiriyu).
+
+* [2022.08.26] Upgrade to [pytorch-lightning-1.7](https://lightning.ai/). The minimum PyTorch version is upgraded to 1.9. To use previous version of PyTorch, please install [NanoDet <= v1.0.0-alpha-1](https://github.com/RangiLyu/nanodet/tags)
+
 * [2021.12.25] **NanoDet-Plus** release! Adding **AGM**(Assign Guidance Module) & **DSLA**(Dynamic Soft Label Assigner) to improve **7 mAP** with only a little cost.
 
 Find more update notes in [Update notes](docs/update.md).
@@ -137,10 +141,9 @@ Besides, We provide a notebook [here](./demo/demo-inference-with-pytorch.ipynb) 
 ### Requirements
 
 * Linux or MacOS
-* CUDA >= 10.0
-* Python >= 3.6
-* Pytorch >= 1.7
-* experimental support Windows (Notice: Windows not support distributed training before pytorch1.7)
+* CUDA >= 10.2
+* Python >= 3.7
+* Pytorch >= 1.10.0, <2.0.0
 
 ### Step
 
@@ -157,17 +160,21 @@ Besides, We provide a notebook [here](./demo/demo-inference-with-pytorch.ipynb) 
 conda install pytorch torchvision cudatoolkit=11.1 -c pytorch -c conda-forge
 ```
 
-3. Install requirements
-
-```shell script
-pip install Cython termcolor numpy tensorboard pycocotools matplotlib pyaml opencv-python tqdm pytorch-lightning torchmetrics
-```
-
-4. Setup NanoDet
+3. Clone this repository
 
 ```shell script
 git clone https://github.com/RangiLyu/nanodet.git
 cd nanodet
+```
+
+4. Install requirements
+
+```shell script
+pip install -r requirements.txt
+```
+
+5. Setup NanoDet
+```shell script
 python setup.py develop
 ```
 
@@ -213,13 +220,15 @@ NanoDet-RepVGG        | RepVGG-A0          | 416*416  |  27.8  | 11.3G | 6.75M |
 
     If your dataset annotations are pascal voc xml format, refer to [config/nanodet_custom_xml_dataset.yml](config/nanodet_custom_xml_dataset.yml)
 
+    Otherwise, if your dataset annotations are YOLO format ([Darknet TXT](https://github.com/AlexeyAB/Yolo_mark/issues/60#issuecomment-401854885)), refer to [config/nanodet-plus-m_416-yolo.yml](config/nanodet-plus-m_416-yolo.yml)
+
     Or convert your dataset annotations to MS COCO format[(COCO annotation format details)](https://cocodataset.org/#format-data).
 
 2. **Prepare config file**
 
     Copy and modify an example yml config file in config/ folder.
 
-    Change ***save_path*** to where you want to save model.
+    Change ***save_dir*** to where you want to save model.
 
     Change ***num_classes*** in ***model->arch->head***.
 

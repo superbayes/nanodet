@@ -67,7 +67,7 @@ data:
   train:
     name: YoloDataset
     img_path: ./datasets/D1/train/images
-    ann_path: ./datasets/D1/train/ann
+    ann_path: ./datasets/D1/train/images
     class_names: *class_names
     input_size: [416,416] #[w,h]
     keep_ratio: False
@@ -86,7 +86,7 @@ data:
   val:
     name: YoloDataset
     img_path: ./datasets/D1/val/images
-    ann_path: ./datasets/D1/val/ann
+    ann_path: ./datasets/D1/val/images
     class_names: *class_names
     input_size: [416,416] #[w,h]
     keep_ratio: False

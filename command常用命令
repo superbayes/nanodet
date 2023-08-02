@@ -1,29 +1,30 @@
-conda create -n nanodet python=3.8 -y
-conda activate nanodet
-
 #安装环境
-conda install pytorch torchvision cudatoolkit=11.1 -c pytorch -c conda-forge
-pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html 
-pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/cu116
-pip install Cython termcolor numpy tensorboard pycocotools matplotlib pyaml opencv-python tqdm pytorch-lightning torchmetrics tabulate onnxsim onnxruntime flatbuffers sympy
-pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
-
-
-#恒源云clone项目
-git clone https://ghproxy.com/https://github.com/RangiLyu/nanodet.git
-cd nanodet
+conda create -n nanodet python=3.8 -y && conda activate nanodet
+pip install torch==1.12.0+cu116 torchvision==0.13.0+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
+git clone https://ghproxy.com/https://github.com/superbayes/nanodet.git && cd nanodet
+pip install -r requirements.txt
 python setup.py develop
+#参考
+pip3 install torch==1.10.2+cu113 torchvision==0.11.3+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html 
+pip install Cython termcolor numpy tensorboard pycocotools matplotlib pyaml opencv-python tqdm pytorch-lightning torchmetrics tabulate onnxsim onnxruntime flatbuffers sympy
+
+# oss 登录
+oss login
+18001617113
+futech123456
+
+#load data
+oss cp oss://datasets/D1_0801.zip ./D1_0801.zip
 
 #训练模型
-python tools/train.py CONFIG_FILE_PATH
+python tools/train.py config/nanodet-plus-m_416-yolo_hand20230801.yml
 #导出onnx
-CONFIG_PATH=./config/nanodet-plus-m-1.5x_416_bccd_voc.yml
-PYTORCH_MODEL_PATH=./workspace/nanodet-plus-m-1.5x_416/model_best/nanodet_model_best.pth
+CONFIG_PATH=./config/nanodet-plus-m_416-yolo_hand20230801.yml
+PYTORCH_MODEL_PATH=./workspace/nanodet-plus-m_416/model_best/nanodet_model_best.pth
 python tools/export_onnx.py --cfg_path ${CONFIG_PATH} --model_path ${PYTORCH_MODEL_PATH}
 
 #模型预测
 python demo/demo.py image --config config/nanodet-plus-m-1.5x_416.yml --model config/nanodet-plus-m-1.5x_416.pth --path images/
-
 
 #压缩与解压
 unzip ./datasets/xx.zip -d ./

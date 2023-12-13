@@ -13,6 +13,9 @@ oss login
 18001617113
 futech123456
 
+#下载模型
+wget https://github.com/RangiLyu/nanodet/releases/download/v1.0.0-alpha-1/nanodet-plus-m-1.5x_416_checkpoint.ckpt
+
 #load data
 oss cp oss://datasets/D1_0801.zip ./D1_0801.zip
 
